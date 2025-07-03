@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { ArrowLeft, Search, Package, MapPin, Clock, CheckCircle } from 'lucide-react-native';
+import { ArrowLeft, Search, Package, MapPin, Clock, CircleCheck as CheckCircle } from 'lucide-react-native';
 import { Picker } from '@react-native-picker/picker';
 import Toast from 'react-native-toast-message';
 import { Input } from '@/components/Input';
