@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
 import { useAuth } from '@/contexts/AuthContext';
-import { Mail, MapPin, LogOut, User as UserIcon, Package, CreditCard, Settings, Plus, MapPinIcon, Search } from 'lucide-react-native';
+import { Mail, MapPin, LogOut, User as UserIcon, Package, CreditCard, Settings, Plus, MapPin as MapPinIcon, Search } from 'lucide-react-native';
 
 interface OrderHistoryItem {
   id: string;
