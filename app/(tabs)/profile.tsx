@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
 import { useAuth } from '@/contexts/AuthContext';
-import { Mail, MapPin, LogOut, User as UserIcon, Package, CreditCard } from 'lucide-react-native';
+import { Mail, MapPin, LogOut, User as UserIcon, Package, CreditCard, Settings, Plus, MapPinIcon, Search } from 'lucide-react-native';
 
 interface OrderHistoryItem {
   id: string;
@@ -23,6 +24,7 @@ const mockOrderHistory: OrderHistoryItem[] = [
 export default function ProfileScreen() {
   const { user, logout, updateAddress } = useAuth();
   const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [isAdminMode, setIsAdminMode] = useState(false);
   const [addressForm, setAddressForm] = useState({
     fullName: 'John Doe',
     streetAddress: '123 Main St',
@@ -64,6 +66,18 @@ export default function ProfileScreen() {
     }
   };
 
+  const handleAddProduct = () => {
+    router.push('/admin/add-product');
+  };
+
+  const handleManageLocations = () => {
+    router.push('/admin/manage-locations');
+  };
+
+  const handleTrackOrder = () => {
+    router.push('/admin/order-tracking');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -81,6 +95,44 @@ export default function ProfileScreen() {
                 <Mail size={16} color="#666" />
                 <Text style={styles.infoText}>{user?.email}</Text>
               </View>
+            </View>
+          </View>
+
+          {/* Admin Mode Toggle */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Settings size={20} color="#E91E63" />
+              <Text style={styles.sectionTitle}>Admin Settings</Text>
+            </View>
+            <View style={styles.adminCard}>
+              <View style={styles.adminToggleRow}>
+                <Text style={styles.adminToggleLabel}>Enter Admin Mode</Text>
+                <Switch
+                  value={isAdminMode}
+                  onValueChange={setIsAdminMode}
+                  trackColor={{ false: '#E0E0E0', true: '#E91E63' }}
+                  thumbColor={isAdminMode ? '#FFFFFF' : '#FFFFFF'}
+                />
+              </View>
+              
+              {isAdminMode && (
+                <View style={styles.adminButtonsContainer}>
+                  <TouchableOpacity style={styles.adminButton} onPress={handleAddProduct}>
+                    <Plus size={20} color="#E91E63" />
+                    <Text style={styles.adminButtonText}>Add New Product</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity style={styles.adminButton} onPress={handleManageLocations}>
+                    <MapPinIcon size={20} color="#E91E63" />
+                    <Text style={styles.adminButtonText}>Manage Locations</Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity style={styles.adminButton} onPress={handleTrackOrder}>
+                    <Search size={20} color="#E91E63" />
+                    <Text style={styles.adminButtonText}>Track an Order</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
 
@@ -261,6 +313,45 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
     marginBottom: 4,
+  },
+  adminCard: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  adminToggleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  adminToggleLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  adminButtonsContainer: {
+    gap: 12,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+  },
+  adminButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#F8F9FA',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E91E63',
+    gap: 12,
+  },
+  adminButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#E91E63',
   },
   editingContainer: {
     gap: 16,
