@@ -10,7 +10,7 @@ import { Button } from '@/components/Button';
 import { useAdmin } from '@/contexts/AdminContext';
 
 export default function AddProductScreen() {
-  const { locations, addProduct } = useAdmin();
+  const { locations, addProduct } = useAdmin();@react
   const [formData, setFormData] = useState({
     name: '',
     price: '',
