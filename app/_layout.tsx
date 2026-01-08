@@ -22,6 +22,7 @@ export default function RootLayout() {
             <Stack.Screen name="order-confirmation" />
             <Stack.Screen name="admin/add-product" />
             <Stack.Screen name="admin/manage-locations" />
+            <Stack.Screen name="admin/manage-users" />
             <Stack.Screen name="admin/order-tracking" />
             <Stack.Screen name="+not-found" />
           </Stack>

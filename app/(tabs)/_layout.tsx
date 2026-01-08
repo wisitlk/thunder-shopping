@@ -1,5 +1,5 @@
 import { Redirect, Tabs } from 'expo-router';
-import { Chrome as Home, User, ShoppingCart } from 'lucide-react-native';
+import { Chrome as Home, User, ShoppingCart, Shield } from 'lucide-react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
 import { View, Text, StyleSheet } from 'react-native';
@@ -15,7 +15,7 @@ function CartBadge({ count }: { count: number }) {
 }
 
 export default function TabLayout() {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const { getTotalItems } = useCart();
 
   if (!user) {
@@ -72,6 +72,16 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color }) => (
             <User size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="admin"
+        options={{
+          title: 'Admin',
+          tabBarIcon: ({ size, color }) => (
+            <Shield size={size} color={color} />
+          ),
+          href: isAdmin ? '/admin' : null,
         }}
       />
     </Tabs>

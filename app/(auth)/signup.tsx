@@ -12,7 +12,14 @@ export default function SignupScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string; confirmPassword?: string }>({});
   
-  const { signup, isLoading } = useAuth();
+  const { signup, loginWithGoogle, isLoading } = useAuth();
+
+  const handleGoogleSignup = async () => {
+    const success = await loginWithGoogle();
+    if (!success) {
+      Alert.alert('Signup Failed', 'Unable to signup with Google. Please try again.');
+    }
+  };
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string; confirmPassword?: string } = {};
@@ -95,6 +102,20 @@ export default function SignupScreen() {
                 style={styles.signupButton}
               />
 
+              <View style={styles.dividerContainer}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>OR</Text>
+                <View style={styles.dividerLine} />
+              </View>
+
+              <Button
+                title="Continue with Google"
+                onPress={handleGoogleSignup}
+                loading={isLoading}
+                variant="secondary"
+                style={styles.googleButton}
+              />
+
               <View style={styles.loginContainer}>
                 <Text style={styles.loginText}>Already have an account? </Text>
                 <Link href="/(auth)/login" style={styles.loginLink}>
@@ -144,6 +165,25 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     marginTop: 8,
+    marginBottom: 24,
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#E0E0E0',
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
+  googleButton: {
     marginBottom: 32,
   },
   loginContainer: {
